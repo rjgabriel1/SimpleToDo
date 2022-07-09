@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
     val listOfTasks = mutableListOf<String>()
@@ -86,7 +87,12 @@ class MainActivity : AppCompatActivity() {
     }
     
     // Save items by writing them into files
+
     fun saveItems(){
-        FileUtils.writeLines(getDataFile(),listOfTasks)
+        try {
+            FileUtils.writeLines(getDataFile(), listOfTasks)
+        } catch (ioException: IOException){
+            ioException.printStackTrace()
+        }
     }
 }
