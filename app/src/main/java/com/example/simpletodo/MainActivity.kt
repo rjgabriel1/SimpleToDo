@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
 import java.io.IOException
+import java.nio.charset.Charset
 
 class MainActivity : AppCompatActivity() {
-    val listOfTasks = mutableListOf<String>()
+    var listOfTasks = mutableListOf<String>()
     lateinit var adapter : TaskItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() {
                 //2.Notify the adapter the data set has changed
                 adapter.notifyDataSetChanged()
 
+                saveItems()
+
             }
 
         }
@@ -34,8 +37,7 @@ class MainActivity : AppCompatActivity() {
 //        findViewById<Button>(R.id.button).setOnClickListener{
 //            Log.i("Gabe","User clicked")
 //        }
-        listOfTasks.add("Playfootball")
-        listOfTasks.add("work out")
+        loadItem()
     // Look up the recyclerView in layout
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         // create adapter passing in the sample user data
@@ -66,11 +68,11 @@ class MainActivity : AppCompatActivity() {
             // 3. Reset the entry field
             inputTextField.setText("")
 
-
+            saveItems()
         }
     }
     // Save the data that the user has entered
-    //save data by writing an readin from the file
+    //save data by writing an reading from the file
     
     // Get the file we need
      fun getDataFile(): File {
@@ -83,7 +85,12 @@ class MainActivity : AppCompatActivity() {
     
     // Load the items by reading every lines in the file
     fun loadItem(){
-        
+        try {
+            listOfTasks = FileUtils.readLines(getDataFile(), Charset.defaultCharset())
+
+        } catch (ioException: IOException){
+            ioException.printStackTrace()
+        }
     }
     
     // Save items by writing them into files
