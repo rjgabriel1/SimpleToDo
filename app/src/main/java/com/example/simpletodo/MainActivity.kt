@@ -32,11 +32,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        //1. Let's detect when the user press button
 
-//        findViewById<Button>(R.id.button).setOnClickListener{
-//            Log.i("Gabe","User clicked")
-//        }
         loadItem()
     // Look up the recyclerView in layout
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
